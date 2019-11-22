@@ -54,7 +54,7 @@ namespace DocsQuickstart
             var paragraphs = 0;
             var days = 0;
             var wfh = 0;
-            var tagList = new List<string>();
+            var tagDict = new Dictionary<string, int>();
             foreach (var element in doc.Body.Content)
             {
                 if (element.Paragraph != null)
@@ -70,28 +70,28 @@ namespace DocsQuickstart
                     // Date "title" parsing
                     if (IsADateHeading(text))
                     {
-                        Console.WriteLine($"Fecha: {text.Trim()}");
+                        Console.WriteLine($"Date: {text.Trim()}");
                         days += 1;
                         if (text.ToLower().Contains("[wfh]")) wfh += 1;
-                        SearchForPossibleDayTags(text, tagList);
+                        SearchForPossibleDayTags(text, tagDict);
                     }
 
                     // Pluralsight example
-                    if ((text != null) && (text.Contains("Pluralsight"))) Console.WriteLine(text);
+                    if ((text != null) && (text.Contains("Pluralsight:"))) Console.WriteLine(text);
                 }
             }
             Console.WriteLine($"\nParagraph count: {paragraphs}");
             Console.WriteLine($"Work days: {days}");
             Console.WriteLine($"Remoting days: {wfh}");
             Console.WriteLine("\nDay Tags:");
-            foreach (var item in tagList.OrderBy(t => t))
+            foreach (var item in tagDict.OrderBy(i => i.Key))
             {
-                Console.WriteLine($"[{item}]");
+                Console.WriteLine($"[{item.Key}]: {item.Value}");
             }
             Console.ReadLine();
         }
 
-        private static void SearchForPossibleDayTags(string text, List<string> list)
+        private static void SearchForPossibleDayTags(string text, Dictionary<string, int> dict)
         {
             var tags = new List<string>();
             var bInsideTag = false;
@@ -116,7 +116,10 @@ namespace DocsQuickstart
             }
             foreach (var tag in tags)
             {
-                if (!list.Contains(tag)) list.Add(tag);
+                if (!dict.ContainsKey(tag))
+                    dict.Add(tag, 1);
+                else
+                    dict[tag] += 1;
             }
         }
 
