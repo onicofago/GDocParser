@@ -13,5 +13,5 @@ YYYYMMDD
 
 Aliquam in fringilla ex. Etiam fringilla lectus nisl, sit amet imperdiet mauris lacinia et. Nam sed nibh in sem luctus suscipit. Curabitur volutpat elit a lacus sagittis, eget dictum erat ornare.
 ```
-In files that you want to parse, for instance, looking for Pluralsight notes or days worked remotely.<br>
-HTH
+In files that you want to parse, for instance, looking for "Pluralsight" notes or days worked remotely. ("[wfh]")<br>
+
