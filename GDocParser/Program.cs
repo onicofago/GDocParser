@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
+
 namespace DocsQuickstart
 {
     class Program
@@ -70,7 +72,7 @@ namespace DocsQuickstart
                     // Date "title" parsing
                     if (IsADateHeading(text))
                     {
-                        Console.WriteLine($"Date: {text.Trim()}");
+                        Console.WriteLine($"Date: {GetDateFromTitle(text.Trim()).ToString("dd/MMM/yyyy")}");
                         days += 1;
                         if (text.ToLower().Contains("[wfh]")) wfh += 1;
                         SearchForPossibleDayTags(text, tagDict);
@@ -89,6 +91,13 @@ namespace DocsQuickstart
                 Console.WriteLine($"[{item.Key}]: {item.Value}");
             }
             Console.ReadLine();
+        }
+
+        private static DateTime GetDateFromTitle(string title)
+        {
+            title = title.Substring(0, 8);
+            var dateString = new String(title.Where(Char.IsDigit).ToArray());
+            return DateTime.ParseExact(dateString, "yyyyMMdd", CultureInfo.InvariantCulture);
         }
 
         private static void SearchForPossibleDayTags(string text, Dictionary<string, int> dict)
