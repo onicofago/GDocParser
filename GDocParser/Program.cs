@@ -84,7 +84,7 @@ namespace DocsQuickstart
             }
             Console.WriteLine($"\nParagraph count: {paragraphs}");
             Console.WriteLine($"Work days: {days}");
-            Console.WriteLine($"Remoting days: {wfh}");
+            Console.WriteLine($"Remoting days: {wfh} ({decimal.Parse(wfh.ToString())/decimal.Parse(days.ToString()):P})");
             Console.WriteLine("\nDay Tags:");
             foreach (var item in tagDict.OrderBy(i => i.Key))
             {
